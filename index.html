@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SASA – Zippee Strategic Analytics Suite</title>
+
+<style>
+:root{
+    --zippee-primary:#00305E;
+    --zippee-secondary:#0078D4;
+    --text-dark:#1d2a38;
+    --card-bg:rgba(255,255,255,.15);
+}
+
+body.dark{
+    --zippee-primary:#dce9ff;
+    --text-dark:#f5f5f5;
+    --card-bg:rgba(0,0,0,.35);
+    background:#0b1320 !important;
+}
+.thanks-box{
+    text-align:center;
+    background:rgba(255,255,255,0.55);
+    padding:10px 16px;
+    border-radius:14px;
+    font-weight:600;
+    width:fit-content;
+    margin:6px auto 14px auto;
+    box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+
+body.dark .thanks-box{
+    background:rgba(0,0,0,0.55);
+    color:white;
+}
+
+/* GLOBAL */
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:url('Zippee.png') no-repeat center/cover;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:none;
+    z-index:-1;
+}
+
+/* HEADER */
+.header-main{
+    background:rgba(0,48,94,.85);
+    color:white;
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:10px 8px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    z-index:20;
+}
+
+.header-logo{height:36px}
+h1{margin:0;font-size:22px}
+
+/* CONTAINER */
+.container{
+    margin:110px auto 70px auto;
+    width:92%;
+    max-width:1100px;
+    padding:30px 22px;
+    border-radius:18px;
+    background:var(--card-bg);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 30px rgba(0,0,0,.2);
+    color:var(--text-dark);
+}
+
+/* SASA IMAGE + GLOW */
+.sasa-hero{
+    display:flex;
+    justify-content:center;
+    margin-bottom:8px;
+}
+
+.sasa-img{
+    height:150px;
+    border-radius:16px;
+    animation:glow 3.5s ease-in-out infinite;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+@keyframes glow{
+    0%,100%{box-shadow:0 0 12px rgba(0,120,255,.4)}
+    50%{box-shadow:0 0 28px rgba(0,120,255,.8)}
+}
+
+/* SPEECH BUBBLE */
+.sasa-speech{
+    text-align:center;
+    font-weight:600;
+    background:white;
+    padding:8px 14px;
+    border-radius:12px;
+    width:fit-content;
+    margin:0 auto 10px auto;
+    box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+
+/* CREDIT CARD */
+.credit-card{
+    text-align:center;
+    background:rgba(255,255,255,0.55);
+    padding:8px 14px;
+    border-radius:12px;
+    font-weight:600;
+    width:fit-content;
+    margin:6px auto 10px auto;
+    box-shadow:0 6px 18px rgba(0,0,0,0.2);
+}
+
+.credit-card a{
+    text-decoration:none;
+    font-weight:700;
+    color:#00305E;
+}
+
+body.dark .credit-card{
+    background:rgba(0,0,0,0.55);
+    color:white;
+}
+
+/* BUTTONS */
+.button-group{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:10px;
+}
+
+.tool-button{
+    background:linear-gradient(135deg,#0A66C2,#0078FF);
+    color:white;
+    padding:14px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:700;
+    min-width:250px;
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    align-items:center;
+    transition:.25s;
+}
+
+.tool-button:hover{transform:translateY(-3px) scale(1.01)}
+
+/* DARK MODE BUTTON */
+.toggle-dark{
+    position:fixed;
+    top:10px;
+    right:15px;
+    background:white;
+    border-radius:50px;
+    padding:6px 12px;
+    cursor:pointer;
+    font-size:14px;
+    z-index:50;
+}
+
+/* ASSISTANT BUTTON + CHAT BOX */
+.assist-btn{
+    position:fixed;
+    right:18px;
+    bottom:80px;
+    background:#0078ff;
+    color:white;
+    padding:12px 15px;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(0,0,0,.35);
+    z-index:30;
+}
+
+.chat-box{
+    position:fixed;
+    right:18px;
+    bottom:140px;
+    width:260px;
+    background:white;
+    border-radius:14px;
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+    display:none;
+    padding:10px 14px;
+    z-index:30;
+}
+
+/*Download 30 days Button*/
+.tool-button{
+    border:none;
+    outline:none;
+}
+
+.tool-button:focus,
+.tool-button:active{
+    outline:none;
+    box-shadow:none;
+}
+
+/* LOADER */
+.loader-screen{
+    position:fixed;
+    inset:0;
+    background:#001c38;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.dots::after{
+    content:"";
+    animation:dots 1.4s steps(4,end) infinite;
+}
+@keyframes dots{
+    0%{content:"."}
+    33%{content:".."}
+    66%{content:"..."}
+}
+
+/* FLOATING PARTICLES */
+.particle{
+    position:fixed;
+    border-radius:50%;
+    background:rgba(255,255,255,.35);
+    animation:floatUp 12s linear infinite;
+}
+@keyframes floatUp{
+    from{transform:translateY(100vh) scale(.6);opacity:.8}
+    to{transform:translateY(-10vh) scale(1.2);opacity:0}
+}
+
+/* TICKER */
+.ticker-bar{
+    position:fixed;
+    bottom:15px;
+    width:100%;
+    background:rgba(0,48,94,.92);
+    color:white;
+    padding:7px 0;
+    overflow:hidden;
+    z-index:5;
+}
+
+.ticker-content{
+    white-space:nowrap;
+    display:inline-block;
+    padding-left:100%;
+    animation:marq 35s linear infinite;
+}
+@keyframes marq{to{transform:translateX(-100%)}}
+
+/* MOBILE */
+@media(max-width:600px){
+    .sasa-img{height:115px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING SCREEN -->
+<div class="loader-screen" id="loader">
+    <img src="SASA.png" height="120"><br>
+    <div>SASA is loading your analytics<span class="dots"></span></div>
+</div>
+
+<!-- DARK MODE TOGGLE -->
+<div class="toggle-dark" onclick="toggleDark()">🌙 / ☀️</div>
+
+<!-- HEADER -->
+<div class="header-main">
+    <img src="ZippeeSocial-Image.webp" class="header-logo">
+    <h1>SASA – Zippee Strategic Analytics Suite</h1>
+</div>
+
+<!-- FLOATING PARTICLES -->
+<script>
+for(let i=0;i<18;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    const size=Math.random()*8+4;
+    p.style.width=p.style.height=size+"px";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=10+Math.random()*10+"s";
+    document.body.appendChild(p);
+}
+</script>
+
+<!-- MAIN CARD -->
+<div class="container">
+
+    <div class="sasa-hero">
+        <img src="SASA.png" class="sasa-img">
+    </div>
+
+    <div class="sasa-speech">
+        👋 Hi, I’m <b>SASA</b>. I help the Zippee with analytics & insights.
+    </div>
+
+    <!-- CREDIT SECTION -->
+    <div class="credit-card">
+        Created by <strong>Mr. Harshit Saini</strong> – Data Analyst | Zippee<br>
+        🌐 <a href="https://harshit3867.github.io/" target="_blank">Portfolio</a> |
+        💼 <a href="https://www.linkedin.com/in/harshit-saini1/" target="_blank">LinkedIn</a>
+    </div>
+
+    <h2 style="text-align:center">
+        SASA – Zippee Strategic Analytics Suite
+    </h2>
+
+    <p style="text-align:center">
+        Centralized access to Last Mile reporting and pendency-tracking tools.
+    </p>
+
+    <!-- ================= FLIPKART REPORTS SECTION ================= -->
+    <h2 style="text-align:center; margin-top:10px;">Flipkart Reports</h2>
+
+    <div class="button-group">
+        <a class="tool-button" href="EOD.html">📊 LM EOD Report</a>
+        <a class="tool-button" href="LM_CT_team.html">⚡ Live Conversion</a>
+        <a class="tool-button" href="Fk_Full_EOD_Pincode.html">📊EOD + Pincode</a>
+        <a class="tool-button" href="inventory.html">📦 Inventory Report</a>
+        <a class="tool-button" href="fk_stocksummary.html">📦 Stock Summary</a>
+        <a class="tool-button" href="Putaway.html">📥 Putlist Tracker</a>
+        <a class="tool-button" href="Fk_Pincode_Conversion.html">📝 Pincode-Wise Conversion</a>
+        <a class="tool-button" href="IRN.html">⏳IRN Pendancy Report</a>
+        <a class="tool-button" href="Projection.html">📈 Projections</a>
+        <a class="tool-button" href="Performance_test.html">🚀 Performance Analytics</a>
+        <a class="tool-button" href="tracking_id.html">📬 Tracking ID</a>
+        <a class="tool-button" href="manpower_report.html">🧑‍🤝‍🧑 Manpower Report</a>
+    </div>
+    
+    <!-- ================= SDD REPORTS SECTION ================= -->
+    <h2 style="text-align:center; margin-top:25px;">SDD Reports</h2>
+
+    <div class="button-group">
+        <a class="tool-button" href="SDD_Client_attempts.html">📊 Brand/Attempts</a>
+        <a class="tool-button" href="combined_ds_attempts.html">📊 Combined Store/Attempts</a>
+        <a class="tool-button" href="darkstore_attempts.html">📊 Store/Attempts</a>
+        <a class="tool-button" href="SDDClient_pendancy.html">📊 Brand Pendancy</a>        
+        <a class="tool-button" href="SDD_Store_Pendancy.html">🏷️ Dark Store Pendancy</a>
+        <a class="tool-button" href="SDD_Brand_Not_Dispatched_0_attempts.html">📊 Brand Not Dispatched Pendancy</a>   
+        <a class="tool-button" href="SDD_DK_NotDispatched_0_attempts.html">🏷️ DS Not Dispatched Pendancy</a>
+        <a class="tool-button" href="Hul.html">🏷️ Hul Report</a>
+        <a class="tool-button" href="hyue.html">🏷️ Hyue Report</a>  
+        <a class="tool-button" href="Loginext_pendency_10_5.html">🏷️ Loginext_pendency_10_5</a>
+        <a class="tool-button" href="Process_Pendency.html">⚙️ Process Pendency</a>
+       <!-- <a class="tool-button" href="Brand_pendency.html">📊 Brand Pendency</a> -->
+        <a class="tool-button" href="SDD.html">⚡ SLA Performance Report</a>
+        <button class="tool-button" onclick="runAutomation()">
+    ⬇️ Download Last 30-Days Orders
+</button>
+
+
+<script>
+function runAutomation() {
+    fetch("http://127.0.0.1:5000/run", { method: "POST" })
+    .then(res => res.text())
+    .then(alert)
+    .catch(err => alert("Server running......."));
+}
+</script>
+
+    </div>
+
+    <!-- ================= MYNTRA REPORTS SECTION ================= -->
+    <h2 style="text-align:center; margin-top:25px;">Myntra Reports</h2>
+<div class="button-group">
+    <a class="tool-button" href="Hourly(blr+hyd).html">🚴 Hourly </a>
+    <a class="tool-button" href="Hourly(blr + hyd)2.html">🚴 Hourly_Autofetch </a>
+    <a class="tool-button" href="Myntra_unique_rider.html">🚴 Unique Riders </a>
+    <a class="tool-button" href="Myntra_Active_riders.html">🚴 Active Riders </a>
+    <a class="tool-button" href="Myntra_blr_live_count.html">🚴 Live Rider Count (Blr)</a>
+            <a class="tool-button" href="Myntra_hdr_live_count.html">🚴 Live Rider Count (Hyd)</a>
+    <a class="tool-button" href="Mytra_Banglore.html">🚴 Hourly Count (Banglore)</a>
+<a class="tool-button" href="Myntra_Hyderabad.html">🚴 Hourly Count(Hyderabad)</a>
+            <a class="tool-button" href="Myntra_Projection.html">⚡Live Projection</a>
+<a class="tool-button" href="hyd_Excel_to_code.html">Code Generater(Hyderabad)</a>
+        <a class="tool-button" href="blr_excel_to_to_code.html">Code Generater(Banglore)</a>
+    </div>
+   <!-- ================= ZILO REPORTS SECTION ================= -->
+<h2 style="text-align:center; margin-top:25px;">ZILO Reports</h2>
+
+<div class="button-group">
+    <a class="tool-button" href="Zilo.html">Hourly Report</a>
+  </div>
+    <!-- ================= SUPERTAILS REPORTS SECTION ================= -->
+<h2 style="text-align:center; margin-top:25px;">Supertails Reports</h2>
+
+<div class="button-group">
+    <a class="tool-button" href="Pidge_Supertail.html">Pidge Pivot</a>
+    <a class="tool-button" href="Supertail_loginext_Breach.html">Loginext Pendancy</a>
+</div>
+    <!-- ================= Operations SECTION ================= -->
+<h2 style="text-align:center; margin-top:25px;">Operations</h2>
+
+<div class="button-group">
+    <a class="tool-button" href="Operation_FNP_pivot.html">FNP Pivot</a>
+    <a class="tool-button" href="Brand_pivot.html">Other Pivot</a>
+</div>
+</div>
+
+<div class="thanks-box">
+    ⭐ Special thanks to <strong>Madhav Kasturia</strong> (Founder)<br>
+    for his invaluable guidance, encouragement, and support.
+</div>
+
+<div class="thanks-box">
+    ⭐ We are grateful to <strong>Sankalp Sharma</strong> (Head of Last Mile Operations)
+    for their invaluable guidance, encouragement, and constant support.
+</div>
+
+<!-- ASSISTANT BUTTON -->
+<div class="assist-btn" onclick="openChat()">💬</div>
+
+<div class="chat-box" id="chatBox">
+    <b>Hi, I'm SASA</b><br><br>
+    • Use buttons above to open tools<br>
+    • Works on mobile & desktop<br>
+    • Created by <b>Harshit Saini</b><br><br>
+    <button onclick="closeChat()">Close</button>
+</div>
+
+<footer style="text-align:center; font-size:13px; opacity:0.8; margin-top:20px;">
+    © 2026 SASA Automation — All Rights Reserved | Harshit Saini, Data Analyst – Zippee
+    <br>
+    Unauthorized copying, modification or redistribution is strictly prohibited.
+</footer>
+
+    
+<!-- RUNNING TICKER -->
+<div class="ticker-bar">
+    <div class="ticker-content">
+       This project has been developed by Mr. Harshit Saini from the Zippee Team. While every effort has been made to ensure accuracy, some anomalies may exist. For suggestions or feedback, please contact Mr. Harshit Saini (Zippee Team).
+    </div>
+</div>
+
+<script>
+/* LOADER */
+window.onload=()=>setTimeout(()=>loader.style.display="none",1200);
+
+/* DARK MODE */
+function toggleDark(){document.body.classList.toggle("dark")}
+
+/* CHAT */
+function openChat(){chatBox.style.display="block"}
+function closeChat(){chatBox.style.display="none"}
+</script>
+
+<script>
+// Disable right-click
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Disable F12 and Inspect shortcuts
+document.addEventListener('keydown', function(e){
+
+  if (e.keyCode === 123) e.preventDefault(); // F12
+
+  if (e.ctrlKey && e.shiftKey && ['I','J','C','i','j','c'].includes(e.key))
+      e.preventDefault(); // Ctrl+Shift+I/J/C
+
+  if (e.ctrlKey && ['U','u'].includes(e.key))
+      e.preventDefault(); // Ctrl+U View Source
+});
+</script>
+
+<script>
+// Detect DevTools by window resize gap
+setInterval(function () {
+  const threshold = 160;
+  if (
+    window.outerWidth - window.innerWidth > threshold ||
+    window.outerHeight - window.innerHeight > threshold
+  ) {
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:40px;'>Dev Tools are not allowed 🚫</h2>";
+  }
+}, 500);
+
+// Block right click
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// Block keys
+document.addEventListener("keydown", function(e){
+  if (e.keyCode === 123) e.preventDefault();
+  if (e.ctrlKey && e.shiftKey) e.preventDefault();
+  if (e.ctrlKey && ['u','U','c','C','i','I','j','J'].includes(e.key)) e.preventDefault();
+});
+</script>
+
+    
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
